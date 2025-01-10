@@ -1,0 +1,42 @@
+body {
+    color: white;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.bg-body-pc {
+    background-color: black;
+}
+
+.bg-body-pc .bg-body-pc-img {
+    width: 100%;
+    height: 400px;
+    max-height: 400px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-logo {
+    margin-left: 15px;
+}
+
+.form-upload {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.btn-extract {
+    border-radius: 5px;
+}
