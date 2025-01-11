@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}V-IMG - Home {% endblock %}
+
+{% block nav %}
+<nav>
+    <div class="nav-wrapper pink darken-1">
+        <a href="#" class="brand-logo"><i class="material-icons right large">perm_media</i> V-IMG</a>
+        <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li>Olá, Fulado!</li>
+            <li><a href="#!"><i class="material-icons left">exit_to_app</i>Sair</a></li>
+        </ul>
+    </div>
+</nav>
+
+<ul class="sidenav grey darken-4 white-text" id="mobile-nav">
+    <li class="white-text"><a href="#!" class="white-text"><i
+                class="material-icons left white-text">exit_to_app</i>Sair</a>
+    </li>
+</ul>
+{% endblock %}
+
+{% block custom_main %}
+<form action="#" class="form-upload">
+    <div class="file-field input-field">
+        <div class="waves-effect waves-light btn-large pink darken-1">
+            <span><i class="material-icons left">cloud_upload</i>Carregar Vídeo</span>
+            <input type="file" accept=".mp4, .avi, .mov, .mkv, .m4a">
+        </div>
+        <div class="file-path-wrapper">
+            <input class="file-path validate white-text" type="text">
+        </div>
+    </div>
+    <br>
+    <br>
+    <a class="waves-effect waves-light btn-large btn-extract"><i class="material-icons left">perm_media</i>Extrair
+        Imagens</a>
+</form>
+{% endblock %}
+
+{% block main %}
+<div class="row">
+    <div class="col s12 m12">
+        <div class="card grey darken-4">
+            <div class="card-content white-text">
+                <span class="card-title">Histórico</span>
+                <p>Histórico de vídeos do usuário com status.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
