@@ -41,3 +41,14 @@ main {
 .btn-extract {
     border-radius: 5px;
 }
+
+.main-ghost {
+    height: 50px;
+    display: inline;
+    width: 100%;
+    margin: 10px;
+}
+
+.div-login .row {
+    margin-bottom: auto !important;
+}
