@@ -31,7 +31,8 @@ main {
     margin-left: 15px;
 }
 
-.form-upload {
+.form-upload,
+.form-login {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
