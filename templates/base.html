@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- V-IMG CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+
+    <!-- Google Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <title>{% block title %}V-IMG{% endblock %}</title>
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body class="black darken-4 white-text">
+    {% block nav %}{% endblock %}
+    <main>
+        <div class="bg-body-pc">
+            <div class="bg-body-pc-img"
+                style="background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0,0,0,0.8)), url('{{ url_for('static', filename='imgs/bg-body.jpeg')}}');">
+                {% block custom_main %}{% endblock %}
+            </div>
+        </div>
+        {% block main %}{% endblock %}
+    </main>
+    <footer class="page-footer pink darken-3">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Sobre o V-IMG</h5>
+                    <p class="grey-text text-lighten-4">V-IMG é uma plataforma para processamento de imagens a partir de
+                        vídeo. Através
+                        de nossos serviços é possível realizar a extração de imagens em vídeos aceitos nos formatos MP4,
+                        AVI, MOV, MKV e M4A.
+                    </p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text">Links</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3"
+                                href="https://github.com/6SOATGP54/hackathon-web">Repositório Github - Front-end</a>
+                        </li>
+                        <li><a class="grey-text text-lighten-3"
+                                href="https://github.com/6SOATGP54/hackathon-api">Repositório Github - API</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright grey darken-4">
+            <div class="container">
+                &copy; 2025 Todos os direitos reservados | Desenvolvido por Bruno Matias, Clederson
+                Cruz e Lucas
+                Santiago
+                <a class="white-text text-lighten-4 right" href="https://github.com/6SOATGP54"><i
+                        class="material-icons left">business</i>Grupo 54</a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidenav = document.querySelectorAll('.sidenav');
+            M.Sidenav.init(sidenav);
+        });
+    </script>
+    {% block extra_body %}{% endblock %}
+</body>
+
+</html>

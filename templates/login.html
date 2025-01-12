@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}V-IMG - Login{% endblock %}
+
+{% block custom_main %}
+<div class="main-ghost"></div>
+<div class="div-login row grey darken-4">
+    <br><br>
+    <div class="center grey darken-4"><i class="large material-icons">account_circle</i></div>
+
+    <form class="col s12 form-login">
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">email</i>
+                <input id="icon_prefix" type="email" class="white-text validate">
+                <label for="icon_prefix">E-mail</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">lock</i>
+                <input id="icon_telephone" type="password" class="white-text validate">
+                <label for="icon_telephone">Senha</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12 center">
+                <button class="btn btn-large waves-effect waves-light pink darken-4" type="submit"
+                    name="action">Login</button>
+            </div>
+            <div class="input-field col s12 center">
+                Não possui uma conta? <a href="/signup">Cadastre-se</a>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block main %}
+{% for i in range(5) %}
+<br>
+{% endfor %}
+{% endblock %}
