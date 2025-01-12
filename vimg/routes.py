@@ -1,7 +1,5 @@
-from flask import Flask
+from vimg import app
 from flask import render_template
-
-app = Flask(__name__)
 
 @app.route("/")
 def login():
