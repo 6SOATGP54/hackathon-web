@@ -8,19 +8,21 @@
     <br><br>
     <div class="center grey darken-4"><i class="large material-icons">account_circle</i></div>
 
-    <form class="col s12 form-login">
+    <form class="col s12 form-login" method="POST" action="{{ url_for('login') }}">
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">email</i>
-                <input id="icon_prefix" type="email" class="white-text validate">
-                <label for="icon_prefix">E-mail</label>
+                <input id="email" type="email" name="email" minlength="6" maxlength="100" class="white-text validate"
+                    required>
+                <label for="email">E-mail</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">lock</i>
-                <input id="icon_telephone" type="password" class="white-text validate">
-                <label for="icon_telephone">Senha</label>
+                <input id="password" type="password" name="password" minlength="8" maxlength="254"
+                    class="white-text validate" required>
+                <label for="password">Senha</label>
             </div>
         </div>
         <div class="row">
