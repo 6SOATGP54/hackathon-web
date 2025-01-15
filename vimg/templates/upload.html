@@ -8,14 +8,24 @@
         <a href="#" class="brand-logo"><i class="material-icons right large">perm_media</i> V-IMG</a>
         <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li>Olá, Fulado!</li>
-            <li><a href="#!"><i class="material-icons left">exit_to_app</i>Sair</a></li>
+            <li>Olá,
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                {% if category == 'success' %}
+                {{ message }}
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                !</li>
+            <li><a href="{{ url_for('logout' ) }}"><i class="material-icons left">exit_to_app</i>Sair</a></li>
         </ul>
     </div>
 </nav>
 
 <ul class="sidenav grey darken-4 white-text" id="mobile-nav">
-    <li class="white-text"><a href="#!" class="white-text"><i
+    <li class="white-text"><a href="{{ url_for('logout' ) }}" class="white-text"><i
                 class="material-icons left white-text">exit_to_app</i>Sair</a>
     </li>
 </ul>
