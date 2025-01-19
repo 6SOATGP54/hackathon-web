@@ -1,6 +1,7 @@
 from flask.helpers import redirect, url_for
-from vimg.services import UserService
+from vimg.services import UserService, VideoService
 from vimg import app
+from vimg import login_manager
 from flask import render_template, request
 from flask_login import login_required, logout_user
 
@@ -24,7 +25,23 @@ def signup():
     else:
         return UserService.save_and_redirect(request)
 
-@app.route('/upload')
+@app.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload():
-    return render_template('upload.html')
+    if request.method == 'GET':
+        return render_template('upload.html')
+    else:
+        return VideoService.upload_and_redirect(request)
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    return render_template('errors/401.html')
+
+@app.errorhandler(404)
+def not_found(e):
+    return render_template('errors/404.html')
+
+# @app.errorhandler(Exception)
+# def generic_error(e):
+#     print(e)
+#     return render_template('errors/generic.html')

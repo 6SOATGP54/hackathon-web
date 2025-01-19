@@ -1,11 +1,13 @@
+import os
+import requests
 from flask import redirect, flash
 from flask.helpers import url_for
 from flask_login.utils import login_user
-from vimg.models import User
+from flask_login import current_user
+from vimg.models import User, Video
 from vimg import db
 
 class UserService:
-    
     def save_and_redirect(request):
         first_name = request.form['first_name']
         last_name = request.form['last_name']
@@ -34,8 +36,35 @@ class UserService:
 
         if found_user and found_user.verify_password(password):
             login_user(found_user)
-            flash(found_user.first_name, 'success')
+            flash(found_user.first_name, 'user_name')
             return redirect(url_for('upload'))
         else:
             flash('Houve um problema com seu usuário. Por favor, entre em contato com o suporte.', 'error')
             return redirect(url_for('home'))
+
+class VideoService:
+    def __init__(self):
+        self.UPLOAD_FOLDER = '/tmp'
+
+    def upload_and_redirect(request):
+        if 'file' not in request.files:
+            flash('Por favor, envie um arquivo de vídeo para continuar.', 'error')
+            return redirect(url_for('upload'))
+        
+        file = request.files['file']
+        user = User.query.filter_by(id=current_user.get_id()).first()
+        video = Video(file, user)
+
+        if video.is_valid():
+            file.save(os.path.join('/tmp', video.get_secure_filename()))
+            db.session.add(video)
+            db.session.commit()
+            
+            imgs = requests.post('http://localhost:5001/download/zip', files=file)
+            flash('Upload realizado com sucesso.', 'success')
+            flash(user.first_name, 'user_name')
+            return redirect(url_for('upload'))
+        else:
+            flash('Por favor, envie um arquivo de vídeo válido para continuar.', 'error')
+            return redirect(url_for('upload'))
+    
