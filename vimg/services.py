@@ -1,4 +1,5 @@
 import os
+from flask import render_template
 import requests
 from flask import redirect, flash
 from flask.helpers import url_for
@@ -41,6 +42,22 @@ class UserService:
         else:
             flash('Houve um problema com seu usuário. Por favor, entre em contato com o suporte.', 'error')
             return redirect(url_for('home'))
+    
+    def redirect_home(request):
+        if current_user.is_anonymous:
+            return render_template('login.html')
+        else:
+            found_user = User.query.filter_by(id=current_user.get_id()).first()
+            flash(found_user.first_name, 'user_name')
+            return redirect(url_for('upload'))
+    
+    def access_signup_or_redirect(request):
+        if current_user.is_anonymous:
+            return render_template('signup.html')
+        else:
+            found_user = User.query.filter_by(id=current_user.get_id()).first()
+            flash(found_user.first_name, 'user_name')
+            return redirect(url_for('upload'))
 
 class VideoService:
     def __init__(self):
