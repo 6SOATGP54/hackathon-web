@@ -1,7 +1,7 @@
 import os
 from flask import render_template
 import requests
-from flask import redirect, flash
+from flask import redirect, flash, send_file
 from flask.helpers import url_for
 from flask_login.utils import login_user
 from flask_login import current_user
@@ -77,10 +77,15 @@ class VideoService:
             db.session.add(video)
             db.session.commit()
             
-            imgs = requests.post('http://localhost:5001/download/zip', files=file)
-            flash('Upload realizado com sucesso.', 'success')
-            flash(user.first_name, 'user_name')
-            return redirect(url_for('upload'))
+            with open(os.path.join('/tmp', video.get_secure_filename()), 'rb') as loaded_file:
+                print(file)
+                imgs = requests.post('http://localhost:5001/download/zip', files={'file': (os.path.join('/tmp', video.get_secure_filename()), loaded_file, "video/mp4")})
+                print(imgs.status_code)
+                with open('/tmp/download.zip', 'wb') as zip_file:
+                    zip_file.write(imgs.content)
+                flash('Upload realizado com sucesso.', 'success')
+                flash(user.first_name, 'user_name')
+                return send_file('/tmp/download.zip')
         else:
             flash('Por favor, envie um arquivo de vídeo válido para continuar.', 'error')
             return redirect(url_for('upload'))
