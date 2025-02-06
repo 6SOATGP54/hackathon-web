@@ -58,6 +58,33 @@
             <div class="card-content white-text">
                 <span class="card-title">Histórico</span>
                 <p>Histórico de vídeos do usuário com status.</p>
+                {% if videos %}
+                <div class="row">
+                    {% for video in videos %}
+                            <div class="col s6 m3 l2">
+                            <div class="card blue-grey darken-4">
+                                <div class="card-image">
+                                <img src="{{ url_for('static', filename='imgs/thumbnail.png')}}">
+                                <span class="card-title" style="text-shadow: 2px 2px 5px #444">{{ video.filename }}</span>
+                                </div>
+                                <div class="card-content">
+                                <p><b>Data e Hora:</b> {{ video.upload_date }}</p>
+                                </div>
+                                <div class="card-action">
+                                <b>Status:</b>
+                                {% if video.conversion_state %}
+                                    <span class="green darken-3 z-depth-4 right badge white-text">Convertido</span>
+                                {% else %}
+                                    <span class="yellow darken-1 z-depth-4 right badge">Recebido</span>
+                                {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                    Não há vídeos no momento.
+                {% endif %}
             </div>
         </div>
     </div>

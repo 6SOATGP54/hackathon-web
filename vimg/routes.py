@@ -7,7 +7,7 @@ from flask_login import login_required, logout_user
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('login.html')
+    return UserService.redirect_home(request)
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -21,7 +21,7 @@ def logout():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'GET':
-        return render_template('signup.html')
+        return UserService.access_signup_or_redirect(request)
     else:
         return UserService.save_and_redirect(request)
 
@@ -29,7 +29,7 @@ def signup():
 @login_required
 def upload():
     if request.method == 'GET':
-        return render_template('upload.html')
+        return VideoService.load_videos_history(request)
     else:
         return VideoService.upload_and_redirect(request)
 
@@ -41,7 +41,7 @@ def unauthorized():
 def not_found(e):
     return render_template('errors/404.html')
 
-# @app.errorhandler(Exception)
-# def generic_error(e):
-#     print(e)
-#     return render_template('errors/generic.html')
+@app.errorhandler(Exception)
+def generic_error(e):
+    print(e)
+    return render_template('errors/generic.html')
