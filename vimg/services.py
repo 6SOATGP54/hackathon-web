@@ -63,6 +63,10 @@ class VideoService:
     def __init__(self):
         self.UPLOAD_FOLDER = '/tmp'
 
+    def load_videos_history(request):
+        videos = Video.query.filter_by(user=current_user.get_id()).order_by(Video.id.desc()).all()
+        return render_template('upload.html', videos=videos)
+
     def upload_and_redirect(request):
         if 'file' not in request.files:
             flash('Por favor, envie um arquivo de vídeo para continuar.', 'error')
@@ -85,6 +89,8 @@ class VideoService:
                     zip_file.write(imgs.content)
                 flash('Upload realizado com sucesso.', 'success')
                 flash(user.first_name, 'user_name')
+                video.conversion_state = True
+                db.session.commit()
                 return send_file('/tmp/download.zip')
         else:
             flash('Por favor, envie um arquivo de vídeo válido para continuar.', 'error')

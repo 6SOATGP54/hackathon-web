@@ -29,7 +29,7 @@ def signup():
 @login_required
 def upload():
     if request.method == 'GET':
-        return render_template('upload.html')
+        return VideoService.load_videos_history(request)
     else:
         return VideoService.upload_and_redirect(request)
 
