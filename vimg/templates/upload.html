@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 
+{% block extra_head %}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+{% endblock %}
+
 {% block title %}V-IMG - Home{% endblock %}
 
 {% block nav %}
@@ -32,7 +37,7 @@
 {% endblock %}
 
 {% block custom_main %}
-<form action="{{url_for('upload')}}" method="POST" class="form-upload" enctype="multipart/form-data">
+<form action="{{url_for('upload')}}" method="POST" class="form-upload" id="form-upload" enctype="multipart/form-data">
     <div class="file-field input-field">
         <div class="waves-effect waves-light btn-large pink darken-1">
             <span><i class="material-icons left">cloud_upload</i>Carregar Vídeo</span>
@@ -44,10 +49,10 @@
     </div>
     <br>
     <br>
-    <button class="waves-effect waves-light btn-large btn-extract" type=" submit" name="action">Extrair
+    <a class="waves-effect waves-light btn-large btn-extract" id="extrair">Extrair
         Imagens
         <i class="material-icons left">perm_media</i>
-    </button>
+    </a>
 </form>
 {% endblock %}
 
@@ -61,29 +66,30 @@
                 {% if videos %}
                 <div class="row">
                     {% for video in videos %}
-                            <div class="col s6 m3 l2">
-                            <div class="card blue-grey darken-4">
-                                <div class="card-image">
+                    <div class="col s6 m3 l2">
+                        <div class="card blue-grey darken-4">
+                            <div class="card-image">
                                 <img src="{{ url_for('static', filename='imgs/thumbnail.png')}}">
-                                <span class="card-title" style="text-shadow: 2px 2px 5px #444">{{ video.filename }}</span>
-                                </div>
-                                <div class="card-content">
+                                <span class="card-title" style="text-shadow: 2px 2px 5px #444">{{ video.filename
+                                    }}</span>
+                            </div>
+                            <div class="card-content">
                                 <p><b>Data e Hora:</b> {{ video.upload_date }}</p>
-                                </div>
-                                <div class="card-action">
+                            </div>
+                            <div class="card-action">
                                 <b>Status:</b>
                                 {% if video.conversion_state %}
-                                    <span class="green darken-3 z-depth-4 right badge white-text">Convertido</span>
+                                <span class="green darken-3 z-depth-4 right badge white-text">Convertido</span>
                                 {% else %}
-                                    <span class="yellow darken-1 z-depth-4 right badge">Recebido</span>
+                                <span class="yellow darken-1 z-depth-4 right badge">Recebido</span>
                                 {% endif %}
-                                </div>
                             </div>
                         </div>
+                    </div>
                     {% endfor %}
                 </div>
                 {% else %}
-                    Não há vídeos no momento.
+                Não há vídeos no momento.
                 {% endif %}
             </div>
         </div>
@@ -103,4 +109,46 @@
 {% endfor %}
 {% endif %}
 {% endwith %}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#extrair").click(function () {
+            $(this).addClass("disabled").css("pointer-events", "none");
+
+            // Envio do vídeo via AJAX
+            $.ajax({
+                url: $("#form-upload").attr("action"),
+                type: $("#form-upload").attr("method"),
+                data: new FormData($("#form-upload")[0]),
+                processData: false,
+                contentType: false,
+                xhrFields: {
+                    responseType: 'blob' // Indica que a resposta será um arquivo Blob
+                },
+                success: function (response, status, xhr) {
+                    var filename = "download.zip";
+                    var disposition = xhr.getResponseHeader('Content-Disposition');
+                    var matches = /filename="([^"]*)"/.exec(disposition);
+
+                    if (matches != null && matches[1]) {
+                        filename = matches[1];
+                    }
+
+                    // Link download
+                    var link = document.createElement('a');
+                    link.href = URL.createObjectURL(response);
+                    link.download = filename;
+                    link.click();
+
+                    // Recarrega a página após o download
+                    location.reload();
+                },
+                error: function () {
+                    $("#extrair").removeClass("disabled").css("pointer-events", "auto");
+                }
+            });
+        });
+    });
+</script>
+
 {% endblock %}
