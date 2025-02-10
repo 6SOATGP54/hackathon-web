@@ -25,6 +25,9 @@ class User(db.Model, UserMixin):
         self.email = email
         self.password = bcrypt.generate_password_hash(password)
         self.registration_date = datetime.now()
+    
+    def __str__(self):
+        return f'<User name="{self.first_name} {self.last_name}", email="{self.email}">'
 
     def verify_password(self, password):
         return bcrypt.check_password_hash(self.password, password)
@@ -55,7 +58,7 @@ class Video(db.Model):
     conversion_state = db.Column(db.Boolean, default=False)
 
     def __init__(self, file, user):
-        self.ALLOWED_EXTENSIONS = {'mp4', 'avi', 'mov', 'mkv', 'm4a'}
+        self.ALLOWED_EXTENSIONS = ['mp4', 'avi', 'mov', 'mkv', 'm4a']
 
         self.file = file
         self.filename = secure_filename(self.file.filename)
