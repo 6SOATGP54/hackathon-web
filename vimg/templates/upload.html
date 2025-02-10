@@ -44,7 +44,7 @@
             <input type="file" id="file" name="file" accept=".mp4, .avi, .mov, .mkv, .m4a">
         </div>
         <div class="file-path-wrapper">
-            <input class="file-path validate white-text" type="text">
+            <input class="file-path validate white-text" type="text" id="file-path">
         </div>
     </div>
     <br>
@@ -64,7 +64,7 @@
                 <span class="card-title">Histórico</span>
                 <p>Histórico de vídeos do usuário com status.</p>
                 {% if videos %}
-                <div class="row">
+                <div class="row" id="video-history">
                     {% for video in videos %}
                     <div class="col s6 m3 l2">
                         <div class="card blue-grey darken-4">
