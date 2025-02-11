@@ -118,11 +118,15 @@ vimg/
 
 ## Testes
 
-Para rodar os testes automatizados:
+Para rodar os testes unitários:
 
 ```bash
 python -m unittest discover tests
 ```
+
+Para rodar os testes funcionais:
+* Acesse [Testes Funcionais Automatizados do Sistema](https://github.com/6SOATGP54/hackathon-automated-tests) e siga o passo a passo para execução da esteira e geração de relatórios de teste.
+
 ## Segurança
 
 Além do desenho de arquitetura, alguns detalhes de implementação tornam a aplicação robusta e segura ao mesmo tempo.
